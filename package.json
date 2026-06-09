@@ -1,0 +1,28 @@
+{
+  "name": "sonar-cinematic-ai",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"node dev-server.js\" \"vite\"",
+    "dev:api": "node dev-server.js",
+    "dev:ui": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "fetch-catalog": "node scripts/fetch-catalog.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.96.0",
+    "framer-motion": "^11.11.17",
+    "fuse.js": "^7.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "vite": "^8.0.13"
+  }
+}
