@@ -465,9 +465,10 @@ export default function App() {
     setBoards(prev => ({ ...prev, [activeTab]: mergedBoard }));
 
     try {
+      const appToken = import.meta.env.VITE_API_TOKEN || "";
       const llmRes = await fetch("/api/recommend", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-App-Token": appToken },
         body: JSON.stringify({ query: item.title, tab: activeTab }),
       });
       if (!llmRes.ok) throw new Error("llm");
@@ -476,7 +477,7 @@ export default function App() {
       setAIPhase("tmdb");
       const tmdbRes = await fetch("/api/enrich", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-App-Token": appToken },
         body: JSON.stringify({ titles: llmRecs.map(r => r.title), tab: activeTab }),
       });
       if (!tmdbRes.ok) throw new Error("tmdb");

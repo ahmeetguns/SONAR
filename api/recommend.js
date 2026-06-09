@@ -13,7 +13,7 @@ function setCors(req, res) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-App-Token");
 }
 
 const queryCache = new Map();
@@ -77,6 +77,14 @@ export default async function handler(req, res) {
 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const expectedToken = process.env.API_TOKEN;
+  if (expectedToken) {
+    const provided = req.headers["x-app-token"];
+    if (provided !== expectedToken) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
   }
 
   const ip = clientIp(req);
